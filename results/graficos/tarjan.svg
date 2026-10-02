@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500">
+<rect width="100%" height="100%" fill="white"/>
+<text x="60" y="30" font-size="18">Tarjan: tempo (ms) vs V</text>
+<line x1="60" y1="440" x2="740" y2="440" stroke="black"/>
+<line x1="60" y1="440" x2="60" y2="60" stroke="black"/>
+<polyline fill="none" stroke="blue" stroke-width="2" points="66.8,439.5 94.0,437.9 128.0,434.2 400.0,398.6 740.0,350.8 "/>
+<polyline fill="none" stroke="red" stroke-width="2" points="66.8,439.6 94.0,438.2 128.0,434.2 400.0,350.5 740.0,60.0 "/>
+<text x="650" y="40" fill="blue">-- lista</text>
+<text x="650" y="60" fill="red">-- matriz</text>
+</svg>
