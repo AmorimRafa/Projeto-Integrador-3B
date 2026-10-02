@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 
-int grafo_init(Grafo *g, int n_vertices, Representacao repr) {
+int grafo_iniciar(Grafo *g, int n_vertices, Representacao repr) {
     if (!g || n_vertices <= 0) return 1;
     g->n_vertices = n_vertices;
     g->n_arestas = 0;
@@ -16,7 +16,7 @@ int grafo_init(Grafo *g, int n_vertices, Representacao repr) {
     return g->dados ? 0 : 1;
 }
 
-int grafo_add_aresta(Grafo *g, int u, int v) {
+int grafo_adicionar_aresta(Grafo *g, int u, int v) {
     if (!g || !g->dados) return 1;
     int rc;
     if (g->repr == REPR_LISTA)
@@ -28,7 +28,7 @@ int grafo_add_aresta(Grafo *g, int u, int v) {
     return rc;
 }
 
-void grafo_free(Grafo *g) {
+void grafo_liberar(Grafo *g) {
     if (!g || !g->dados) return;
     if (g->repr == REPR_LISTA)
         lista_liberar((ListaAdj *)g->dados);

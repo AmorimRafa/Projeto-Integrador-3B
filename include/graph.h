@@ -24,12 +24,12 @@ typedef struct {
 } Grafo;
 
 /* Inicializa um grafo vazio com a representação escolhida. */
-int grafo_init(Grafo *g, int n_vertices, Representacao repr);
+int grafo_iniciar(Grafo *g, int n_vertices, Representacao repr);
 
 /* Insere aresta direcionada u -> v. Retorna 0 em sucesso, != 0 em erro. */
-int grafo_add_aresta(Grafo *g, int u, int v);
+int grafo_adicionar_aresta(Grafo *g, int u, int v);
 
 /* Libera toda a memória associada ao grafo. */
-void grafo_free(Grafo *g);
+void grafo_liberar(Grafo *g);
 
 #endif /* GRAPH_H */

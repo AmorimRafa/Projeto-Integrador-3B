@@ -42,9 +42,9 @@ int main(int argc, char **argv) {
     printf("V=%d E=%d auto-lacos=%d duplicadas=%d\n", n, m, loops, dups);
 
     Grafo g;
-    if (grafo_init(&g, n, repr) != 0) { free(U); free(V); return 1; }
+    if (grafo_iniciar(&g, n, repr) != 0) { free(U); free(V); return 1; }
     for (int i = 0; i < m; i++)
-        grafo_add_aresta(&g, U[i], V[i]);
+        grafo_adicionar_aresta(&g, U[i], V[i]);
 
     /* mede a memória da estrutura construída pelo Grafo */
     if (repr == REPR_LISTA)
@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
 
     scc_liberar(s);
     if (l_tmp) lista_liberar(l_tmp);
-    grafo_free(&g);
+    grafo_liberar(&g);
     free(U); free(V);
     return 0;
 }
