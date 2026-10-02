@@ -1,6 +1,6 @@
 #ifndef IO_H
 #define IO_H
-
+// Header correpondente ao io.c
 /*
  * io.h — Leitura e processamento do arquivo de entrada (edge list).
  * Formato: "V E" na 1ª linha, depois "u v" por aresta (ver docs/formato_entrada.md).

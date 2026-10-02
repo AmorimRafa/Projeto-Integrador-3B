@@ -16,6 +16,7 @@
 #include "metricas.h"
 #include "registro.h"
 
+
 int main(int argc, char **argv) {
     if (argc < 2) {
         fprintf(stderr, "uso: %s <arquivo.txt> [--matriz]\n", argv[0]);

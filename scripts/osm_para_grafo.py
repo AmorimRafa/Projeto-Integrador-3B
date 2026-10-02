@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Arquivo para converter o arquivo sp_centro.osm
 """
 osm_para_grafo.py — Converte um extrato .osm (XML do Overpass) para o
 formato edge list do projeto (ver documentacao/formato_entrada.md).

@@ -1,3 +1,4 @@
+// Arquivo para entrada/saída dos dados
 #include "io.h"
 
 #include <stdio.h>
