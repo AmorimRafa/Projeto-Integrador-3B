@@ -1,7 +1,7 @@
 
 # 🚇 Projeto Integrador 3B — Transportes Urbanos
 
-Projeto desenvolvido para a disciplina de **Teoria dos Grafos**, com o objetivo de aplicar conceitos de grafos na análise de problemas relacionados aos transportes urbanos e tráfego .
+Projeto desenvolvido para a disciplina de **Teoria dos Grafos**, com o objetivo de aplicar conceitos de grafos na análise de problemas relacionados aos transportes urbanos e tráfego.
 
 ## 🎯 Objetivo
 
