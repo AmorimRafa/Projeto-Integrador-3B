@@ -1,6 +1,8 @@
 #ifndef LISTA_ADJ_H
 #define LISTA_ADJ_H
 
+#include <stddef.h>
+
 /*
  * lista_adj.h — Lista de adjacência para grafo direcionado.
  * Cada vértice u tem uma lista encadeada dos seus sucessores v (u -> v).
@@ -27,5 +29,8 @@ const NoViz *lista_vizinhos(const ListaAdj *l, int u);
 
 /* Libera toda a memória da lista. */
 void lista_liberar(ListaAdj *l);
+
+/* Estima a memória (bytes) usada pela lista: cabeças + nós das arestas. */
+size_t lista_memoria(const ListaAdj *l);
 
 #endif /* LISTA_ADJ_H */

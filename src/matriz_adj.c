@@ -2,6 +2,11 @@
 
 #include <stdlib.h>
 
+size_t matriz_memoria(const MatrizAdj *m) {
+    if (!m) return 0;
+    return sizeof(MatrizAdj) + m->n * sizeof(int *) + (size_t)m->n * m->n * sizeof(int);
+}
+
 MatrizAdj *matriz_criar(int n) {
     if (n <= 0) return NULL;
     MatrizAdj *m = malloc(sizeof(MatrizAdj));

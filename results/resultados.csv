@@ -1,2 +1,4 @@
 dataset,repr,V,E,n_cfc,n_armadilhas,ms_leitura,ms_tarjan,ms_armadilha
 datasets/toy/cfc_simples.txt,lista,5,6,3,1,2.341,0.009,0.004
+datasets/toy/cfc_simples.txt,lista,5,6,3,1,1.542,0.008,0.001
+datasets/toy/cfc_simples.txt,matriz,5,6,3,1,7.620,0.004,0.002

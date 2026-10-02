@@ -2,6 +2,15 @@
 
 #include <stdlib.h>
 
+size_t lista_memoria(const ListaAdj *l) {
+    if (!l) return 0;
+    size_t total = sizeof(ListaAdj) + l->n * sizeof(NoViz *);
+    for (int i = 0; i < l->n; i++)
+        for (const NoViz *p = l->adj[i]; p; p = p->prox)
+            total += sizeof(NoViz);
+    return total;
+}
+
 ListaAdj *lista_criar(int n) {
     if (n <= 0) return NULL;
     ListaAdj *l = malloc(sizeof(ListaAdj));

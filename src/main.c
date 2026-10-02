@@ -42,6 +42,12 @@ int main(int argc, char **argv) {
     for (int i = 0; i < m; i++)
         grafo_add_aresta(&g, U[i], V[i]);
 
+    /* mede a memória da estrutura construída pelo Grafo */
+    if (repr == REPR_LISTA)
+        printf("Memoria lista: %zu bytes\n", lista_memoria((ListaAdj *)g.dados));
+    else
+        printf("Memoria matriz: %zu bytes\n", matriz_memoria((MatrizAdj *)g.dados));
+
     /* CFC e armadilhas exigem a lista de adjacência */
     ListaAdj *l = (repr == REPR_LISTA) ? (ListaAdj *)g.dados : NULL;
     ListaAdj *l_tmp = NULL;
