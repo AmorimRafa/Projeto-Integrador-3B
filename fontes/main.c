@@ -16,15 +16,17 @@
 #include "metricas.h"
 #include "registro.h"
 
-
-int main(int argc, char **argv) {
-    if (argc < 2) {
+int main(int argc, char **argv)
+{
+    if (argc < 2)
+    {
         fprintf(stderr, "uso: %s <arquivo.txt> [--matriz]\n", argv[0]);
         return 2;
     }
     Representacao repr = REPR_LISTA;
     int comparar = 0;
-    for (int i = 2; i < argc; i++) {
+    for (int i = 2; i < argc; i++)
+    {
         if (strcmp(argv[i], "--matriz") == 0)
             repr = REPR_MATRIZ;
         else if (strcmp(argv[i], "--comparar") == 0)
@@ -35,15 +37,26 @@ int main(int argc, char **argv) {
 
     cronometro_iniciar(&t_leitura);
     int n, m, loops, dups, *U, *V;
-    if (io_ler_arestas(argv[1], &n, &m, &U, &V) != 0) return 2;
-    if (io_validar_vertices(U, V, m, n) != 0) { free(U); free(V); return 2; }
+    if (io_ler_arestas(argv[1], &n, &m, &U, &V) != 0)
+        return 2;
+    if (io_validar_vertices(U, V, m, n) != 0)
+    {
+        free(U);
+        free(V);
+        return 2;
+    }
     io_processar_arestas(U, V, m, &loops, &dups);
     double ms_leitura = cronometro_ms(&t_leitura);
     printf("Leitura+validacao: %.2f ms\n", ms_leitura);
     printf("V=%d E=%d auto-lacos=%d duplicadas=%d\n", n, m, loops, dups);
 
     Grafo g;
-    if (grafo_iniciar(&g, n, repr) != 0) { free(U); free(V); return 1; }
+    if (grafo_iniciar(&g, n, repr) != 0)
+    {
+        free(U);
+        free(V);
+        return 1;
+    }
     for (int i = 0; i < m; i++)
         grafo_adicionar_aresta(&g, U[i], V[i]);
 
@@ -54,10 +67,12 @@ int main(int argc, char **argv) {
         printf("Memoria matriz: %zu bytes\n", matriz_memoria((MatrizAdj *)g.dados));
 
     /* modo comparação: constrói as duas e imprime memória lado a lado */
-    if (comparar) {
+    if (comparar)
+    {
         ListaAdj *lcmp = lista_criar(n);
         MatrizAdj *mcmp = matriz_criar(n);
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++)
+        {
             lista_inserir(lcmp, U[i], V[i]);
             matriz_inserir(mcmp, U[i], V[i]);
         }
@@ -71,7 +86,8 @@ int main(int argc, char **argv) {
     /* CFC e armadilhas exigem a lista de adjacência */
     ListaAdj *l = (repr == REPR_LISTA) ? (ListaAdj *)g.dados : NULL;
     ListaAdj *l_tmp = NULL;
-    if (repr == REPR_MATRIZ) {
+    if (repr == REPR_MATRIZ)
+    {
         l_tmp = lista_criar(n);
         MatrizAdj *mz = (MatrizAdj *)g.dados;
         for (int u = 0; u < n; u++)
@@ -83,17 +99,23 @@ int main(int argc, char **argv) {
 
     cronometro_iniciar(&t_tarjan);
     SCC *s = scc_tarjan(l);
-    if (!s) { fprintf(stderr, "erro no tarjan\n"); return 1; }
+    if (!s)
+    {
+        fprintf(stderr, "erro no tarjan\n");
+        return 1;
+    }
     double ms_tarjan = cronometro_ms(&t_tarjan);
     printf("\nTarjan: %.2f ms\n", ms_tarjan);
     printf("CFCs encontradas: %d\n", s->n_comp);
     int limite = s->n_comp < 10 ? s->n_comp : 10;
     for (int c = 0; c < limite; c++)
         printf("  CFC %d: tamanho %d\n", c, s->tam[c]);
-    if (s->n_comp > 10) {
+    if (s->n_comp > 10)
+    {
         int maior = 0;
         for (int c = 0; c < s->n_comp; c++)
-            if (s->tam[c] > maior) maior = s->tam[c];
+            if (s->tam[c] > maior)
+                maior = s->tam[c];
         printf("  ... (%d CFCs omitidas; maior CFC tem %d vertices)\n",
                s->n_comp - 10, maior);
     }
@@ -102,11 +124,13 @@ int main(int argc, char **argv) {
     AnaliseArmadilhas *a = armadilha_analisar(l, s);
     double ms_arm = cronometro_ms(&t_armadilha);
     printf("Analise de armadilhas: %.2f ms\n", ms_arm);
-    if (a) {
+    if (a)
+    {
         printf("\nArmadilhas de transito (CFCs terminais): %d\n", a->n_terminais);
         int mostradas = 0;
         for (int c = 0; c < a->n_comp && mostradas < 20; c++)
-            if (a->terminal[c]) {
+            if (a->terminal[c])
+            {
                 printf("  -> CFC %d (tamanho %d)\n", c, s->tam[c]);
                 mostradas++;
             }
@@ -131,8 +155,10 @@ int main(int argc, char **argv) {
     }
 
     scc_liberar(s);
-    if (l_tmp) lista_liberar(l_tmp);
+    if (l_tmp)
+        lista_liberar(l_tmp);
     grafo_liberar(&g);
-    free(U); free(V);
+    free(U);
+    free(V);
     return 0;
 }

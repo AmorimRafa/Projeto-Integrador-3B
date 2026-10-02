@@ -2,16 +2,20 @@
 
 #include <stdio.h>
 
-int resultado_registrar(const char *caminho_csv, const Resultado *r) {
-    if (!caminho_csv || !r) return 1;
+int resultado_registrar(const char *caminho_csv, const Resultado *r)
+{
+    if (!caminho_csv || !r)
+        return 1;
 
     /* verifica se o arquivo já existe para escrever o cabeçalho só uma vez */
     FILE *teste = fopen(caminho_csv, "r");
     int novo = (teste == NULL);
-    if (teste) fclose(teste);
+    if (teste)
+        fclose(teste);
 
     FILE *f = fopen(caminho_csv, "a");
-    if (!f) {
+    if (!f)
+    {
         fprintf(stderr, "registro: nao foi possivel abrir %s\n", caminho_csv);
         return 1;
     }
