@@ -1,7 +1,7 @@
 /*
  * gerar_graficos.c — Gera gráfico SVG (tempo de Tarjan vs V) a partir de
- * results/resultados.csv. Sem dependências externas.
- * Uso: gerar_graficos results/resultados.csv results/graficos/tarjan.svg
+ * resultados/resultados.csv. Sem dependências externas.
+ * Uso: gerar_graficos resultados/resultados.csv resultados/graficos/tarjan.svg
  */
 #include <stdio.h>
 #include <stdlib.h>

@@ -28,7 +28,7 @@ Gerador `gerar_grafo.c` cria grafos direcionados com:
 
 - 80% das arestas em ciclos (garantem CFCs grandes e várias armadilhas);
 - 20% das arestas aleatórias `u -> v` (ligando componentes);
-- formato edge list padrão (ver `docs/formato_entrada.md`).
+- formato edge list padrão (ver `documentacao/formato_entrada.md`).
 
 ## Métricas coletadas
 
@@ -38,12 +38,12 @@ Para cada (teste, representação):
 - tempo do Tarjan (ms);
 - tempo da análise de armadilhas (ms);
 - memória da lista / da matriz (bytes);
-- todas registradas em `results/resultados.csv`.
+- todas registradas em `resultados/resultados.csv`.
 
 ## Comando padrão
 
 ```bash
-./grafo datasets/gerados/t3.txt            # lista
-./grafo datasets/gerados/t3.txt --matriz   # matriz
-./grafo datasets/gerados/t3.txt --comparar # memória lado a lado
+./grafo dados/gerados/t3.txt            # lista
+./grafo dados/gerados/t3.txt --matriz   # matriz
+./grafo dados/gerados/t3.txt --comparar # memória lado a lado
 ```

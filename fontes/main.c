@@ -86,8 +86,16 @@ int main(int argc, char **argv) {
     double ms_tarjan = cronometro_ms(&t_tarjan);
     printf("\nTarjan: %.2f ms\n", ms_tarjan);
     printf("CFCs encontradas: %d\n", s->n_comp);
-    for (int c = 0; c < s->n_comp; c++)
+    int limite = s->n_comp < 10 ? s->n_comp : 10;
+    for (int c = 0; c < limite; c++)
         printf("  CFC %d: tamanho %d\n", c, s->tam[c]);
+    if (s->n_comp > 10) {
+        int maior = 0;
+        for (int c = 0; c < s->n_comp; c++)
+            if (s->tam[c] > maior) maior = s->tam[c];
+        printf("  ... (%d CFCs omitidas; maior CFC tem %d vertices)\n",
+               s->n_comp - 10, maior);
+    }
 
     cronometro_iniciar(&t_armadilha);
     AnaliseArmadilhas *a = armadilha_analisar(l, s);
@@ -95,9 +103,14 @@ int main(int argc, char **argv) {
     printf("Analise de armadilhas: %.2f ms\n", ms_arm);
     if (a) {
         printf("\nArmadilhas de transito (CFCs terminais): %d\n", a->n_terminais);
-        for (int c = 0; c < a->n_comp; c++)
-            if (a->terminal[c])
+        int mostradas = 0;
+        for (int c = 0; c < a->n_comp && mostradas < 20; c++)
+            if (a->terminal[c]) {
                 printf("  -> CFC %d (tamanho %d)\n", c, s->tam[c]);
+                mostradas++;
+            }
+        if (a->n_terminais > 20)
+            printf("  ... (%d armadilhas omitidas)\n", a->n_terminais - 20);
         printf("CFCs unitarias sem laco: %d | com laco: %d | com >1 vertice: %d\n",
                a->n_tamanho1_sem_laco, a->n_tamanho1_com_laco, a->n_tamanho_maior1);
 
@@ -111,8 +124,8 @@ int main(int argc, char **argv) {
         r.ms_leitura = ms_leitura;
         r.ms_tarjan = ms_tarjan;
         r.ms_armadilha = ms_arm;
-        resultado_registrar("results/resultados.csv", &r);
-        printf("Resultado registrado em results/resultados.csv\n");
+        resultado_registrar("resultados/resultados.csv", &r);
+        printf("Resultado registrado em resultados/resultados.csv\n");
         armadilha_liberar(a);
     }
 

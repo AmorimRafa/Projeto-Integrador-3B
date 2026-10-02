@@ -13,7 +13,7 @@ O Tarjan visita cada vértice e cada aresta uma vez → **O(V + E)**, que é
 linear no tamanho do grafo. A análise de armadilhas também é O(V + E)
 (uma varredura de arestas para montar o DAG de condensação).
 
-## Evidência experimental (T1–T5, do results/resultados.csv)
+## Evidência experimental (T1–T5, do resultados/resultados.csv)
 
 | Teste | V | E | Tarjan lista (ms) | Tarjan matriz (ms) | Análise armadilhas (ms) |
 |---|---|---|---|---|---|

@@ -23,50 +23,64 @@ O problema específico está definido: **malha viária como grafo direcionado, c
 - Git e GitHub
 - GitHub Issues e branches
 
-## 🚀 Como compilar e executar
+## 🚀 Como compilar e executar (do zero)
 
-O build usa o docker compose que está em `../compose.yml` (na raiz de
-`trafego-urbano/`):
+Pré-requisito: **Docker** instalado e rodando.
 
 ```bash
-cd ..
-docker compose run --rm app bash
-# dentro do container:
+git clone https://github.com/AmorimRafa/Projeto-Integrador-3B.git
 cd Projeto-Integrador-3B
-gcc -Wall -Wextra -std=c11 -Iinclude -o grafo \
-  src/main.c src/io.c src/graph.c src/lista_adj.c src/matriz_adj.c \
-  src/scc.c src/armadilha.c src/dfs.c src/metricas.c src/registro.c
-./grafo datasets/toy/cfc_simples.txt            # lista
-./grafo datasets/toy/cfc_simples.txt --matriz   # matriz
-./grafo datasets/toy/cfc_simples.txt --comparar # memória lado a lado
+
+# sobe um container gcc:15 com o repositório montado em /app
+docker compose run --rm app bash
+```
+
+Dentro do container:
+
+```bash
+# compila o programa principal
+gcc -Wall -Wextra -std=c11 -Icabecalhos -o grafo \
+  fontes/main.c fontes/io.c fontes/graph.c fontes/lista_adj.c fontes/matriz_adj.c \
+  fontes/scc.c fontes/armadilha.c fontes/dfs.c fontes/metricas.c fontes/registro.c
+
+# executa (grafo toy)
+./grafo dados/toy/cfc_simples.txt            # lista de adjacência
+./grafo dados/toy/cfc_simples.txt --matriz   # matriz de adjacência
+./grafo dados/toy/cfc_simples.txt --comparar # memória lado a lado
+
+# executa no dataset real (centro de SP)
+./grafo dados/real/sp_centro.txt
 ```
 
 Testes:
 
 ```bash
-gcc -Wall -Wextra -Iinclude -o /tmp/t1 tests/test_cfc.c src/io.c src/lista_adj.c src/matriz_adj.c src/graph.c src/scc.c src/dfs.c
-/tmp/t1 datasets/toy/cfc_simples.txt 3
+gcc -Wall -Wextra -Icabecalhos -o /tmp/t1 testes/test_cfc.c fontes/io.c fontes/lista_adj.c fontes/matriz_adj.c fontes/graph.c fontes/scc.c fontes/dfs.c
+/tmp/t1 dados/toy/cfc_simples.txt 3
+gcc -Wall -Wextra -Icabecalhos -o /tmp/t2 testes/test_armadilha.c fontes/io.c fontes/lista_adj.c fontes/scc.c fontes/armadilha.c
+/tmp/t2 dados/toy/cfc_simples.txt
 ```
 
 Gerar gráfico:
 
 ```bash
 gcc -o /tmp/graf scripts/gerar_graficos.c
-/tmp/graf results/resultados.csv results/graficos/tarjan.svg
+/tmp/graf resultados/resultados.csv resultados/graficos/tarjan.svg
 ```
 
 ## 📁 Estrutura
 
 ```
-include/    headers (.h) — graph, lista_adj, matriz_adj, io, dfs, scc,
-            armadilha, metricas, registro
-src/        implementações (.c) correspondentes + main.c
-tests/      programas de teste (test_cfc, test_armadilha)
-datasets/   toy/ (toy graphs), gerados/ (grafos de desempenho), real/ (futuro)
-docs/       modelo, formato, datasets, armadilha, testes, complexidade,
-            metodologia, resultados
-results/    resultados.csv + graficos/
-scripts/    gerar_grafo.c, gerar_graficos.c
+cabecalhos/   headers (.h): graph, lista_adj, matriz_adj, io, dfs, scc,
+              armadilha, metricas, registro
+fontes/       implementações (.c) + main.c
+testes/       programas de teste (test_cfc, test_armadilha)
+dados/        toy/, gerados/ (desempenho), real/ (dataset OSM de SP)
+documentacao/ modelo, formato, datasets, armadilha, testes, complexidade,
+              metodologia, resultados
+resultados/   resultados.csv + graficos/
+scripts/      gerar_grafo.c, gerar_graficos.c, osm_para_grafo.py
+compose.yml   ambiente docker (imagem gcc:15)
 ```
 
 ## 🔬 Fase I — Atividades Previstas

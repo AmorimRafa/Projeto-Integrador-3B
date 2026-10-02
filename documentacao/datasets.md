@@ -33,12 +33,12 @@
 ## Decisão
 
 **Primária:** OSMnx (opção 1 ou 2), gerando edge list **direcionado** no
-formato definido em `docs/formato_entrada.md`.
+formato definido em `documentacao/formato_entrada.md`.
 
 **Pipeline de conversão** (a implementar em `scripts/`):
 
 ```
-GraphML / osmnx graph → script Python → datasets/real/<cidade>.txt
+GraphML / osmnx graph → script Python → dados/real/<cidade>.txt
 formato: "V E" na primeira linha, depois "u v" por aresta
 ```
 

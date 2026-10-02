@@ -3,9 +3,9 @@
 ## Ambiente
 
 - Compilador: gcc 15 (docker `gcc:15`, `-Wall -Wextra`, sem warnings).
-- Execução: `datasets/gerados/t1..t5.txt` (gerador próprio, E ≈ 4·V).
+- Execução: `dados/gerados/t1..t5.txt` (gerador próprio, E ≈ 4·V).
 
-## Desempenho (results/resultados.csv)
+## Desempenho (resultados/resultados.csv)
 
 | Teste | V | E | Tarjan lista (ms) | Tarjan matriz (ms) | Armadilhas (ms) |
 |---|---|---|---|---|---|
@@ -43,7 +43,28 @@ CFC gigante (~toda a rede) e poucas armadilhas terminais.
 
 ## Gráfico
 
-`results/graficos/tarjan.svg` — tempo do Tarjan × V, lista vs matriz.
+`resultados/graficos/tarjan.svg` — tempo do Tarjan × V, lista vs matriz.
+
+## Dataset real — centro de São Paulo (OSM)
+
+Conversão de `dados/real/sp_centro.osm` (Overpass API, bbox do centro de
+SP) para `dados/real/sp_centro.txt`:
+
+| Métrica | Valor |
+|---|---|
+| Vértices (interseções) | 6.039 |
+| Arestas (ruas dirigidas) | 8.154 |
+| Auto-laços / duplicadas | 0 / 0 |
+| Leitura + validação | ~86 ms |
+| Memória da lista | 178.792 bytes |
+| Tarjan | ~3.4 ms |
+| CFCs | 979 |
+| Maior CFC | 4.786 vértices (~79% da rede) |
+| CFCs terminais (armadilhas) | 60 |
+
+A CFC gigante confirma que o centro de SP é essencialmente uma única
+região coesa para dirigir; as 60 CFCs terminais sinalizam pontos onde
+quem entra não consegue sair/voltar pelo sentido das vias.
 
 ## Conclusões da Fase I
 
@@ -52,5 +73,5 @@ CFC gigante (~toda a rede) e poucas armadilhas terminais.
    detector as encontra em todos os testes.
 3. Lista de adjacência é viável até grafos grandes (T5: ~2.4 ms, ~MB de
    memória); matriz é inviável em V grande.
-4. Pendências: integrar dataset real (VALIDAR O DATASET ESCOLHIDO /
-   EXECUTAR CFC NO DATASET REAL).
+4. Dataset real integrado: `dados/real/sp_centro.txt` gerado do OSM por
+   `scripts/osm_para_grafo.py`; CFC executado com sucesso.

@@ -33,5 +33,5 @@ Grafo: `0 -> 1 -> 2 -> 0` (CFC de tamanho 3), `2 -> 3`, auto-laço `3 -> 3`.
 
 ## Arquivos
 
-- `datasets/toy/` — grafos pequenos com CFCs conhecidos, para testes.
-- `datasets/real/` — malha viária real selecionada na issue de dataset.
+- `dados/toy/` — grafos pequenos com CFCs conhecidos, para testes.
+- `dados/real/` — malha viária real selecionada na issue de dataset.

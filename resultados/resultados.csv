@@ -11,3 +11,5 @@ datasets/gerados/t5.txt,lista,10000,40000,233,129,2868.320,2.431,5.475
 datasets/gerados/t5.txt,matriz,10000,40000,233,129,1908.075,10.361,5.365
 datasets/toy/cfc_simples.txt,lista,5,6,3,1,3.370,0.006,0.002
 datasets/toy/cfc_simples.txt,matriz,5,6,3,1,10.643,0.009,0.003
+datasets/real/sp_centro.txt,lista,6039,8154,979,60,85.786,3.424,8.246
+dados/toy/cfc_simples.txt,lista,5,6,3,1,1.672,0.005,0.002
