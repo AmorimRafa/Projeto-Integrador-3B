@@ -14,6 +14,7 @@
 #include "scc.h"
 #include "armadilha.h"
 #include "metricas.h"
+#include "registro.h"
 
 int main(int argc, char **argv) {
     if (argc < 2) {
@@ -32,7 +33,8 @@ int main(int argc, char **argv) {
     if (io_ler_arestas(argv[1], &n, &m, &U, &V) != 0) return 2;
     if (io_validar_vertices(U, V, m, n) != 0) { free(U); free(V); return 2; }
     io_processar_arestas(U, V, m, &loops, &dups);
-    printf("Leitura+validacao: %.2f ms\n", cronometro_ms(&t_leitura));
+    double ms_leitura = cronometro_ms(&t_leitura);
+    printf("Leitura+validacao: %.2f ms\n", ms_leitura);
     printf("V=%d E=%d auto-lacos=%d duplicadas=%d\n", n, m, loops, dups);
 
     Grafo g;
@@ -56,14 +58,16 @@ int main(int argc, char **argv) {
     cronometro_iniciar(&t_tarjan);
     SCC *s = scc_tarjan(l);
     if (!s) { fprintf(stderr, "erro no tarjan\n"); return 1; }
-    printf("\nTarjan: %.2f ms\n", cronometro_ms(&t_tarjan));
+    double ms_tarjan = cronometro_ms(&t_tarjan);
+    printf("\nTarjan: %.2f ms\n", ms_tarjan);
     printf("CFCs encontradas: %d\n", s->n_comp);
     for (int c = 0; c < s->n_comp; c++)
         printf("  CFC %d: tamanho %d\n", c, s->tam[c]);
 
     cronometro_iniciar(&t_armadilha);
     AnaliseArmadilhas *a = armadilha_analisar(l, s);
-    printf("Analise de armadilhas: %.2f ms\n", cronometro_ms(&t_armadilha));
+    double ms_arm = cronometro_ms(&t_armadilha);
+    printf("Analise de armadilhas: %.2f ms\n", ms_arm);
     if (a) {
         printf("\nArmadilhas de transito (CFCs terminais): %d\n", a->n_terminais);
         for (int c = 0; c < a->n_comp; c++)
@@ -71,6 +75,19 @@ int main(int argc, char **argv) {
                 printf("  -> CFC %d (tamanho %d)\n", c, s->tam[c]);
         printf("CFCs unitarias sem laco: %d | com laco: %d | com >1 vertice: %d\n",
                a->n_tamanho1_sem_laco, a->n_tamanho1_com_laco, a->n_tamanho_maior1);
+
+        Resultado r;
+        r.dataset = argv[1];
+        r.repr = (repr == REPR_LISTA) ? "lista" : "matriz";
+        r.n_vertices = n;
+        r.n_arestas = m;
+        r.n_cfc = s->n_comp;
+        r.n_armadilhas = a->n_terminais;
+        r.ms_leitura = ms_leitura;
+        r.ms_tarjan = ms_tarjan;
+        r.ms_armadilha = ms_arm;
+        resultado_registrar("results/resultados.csv", &r);
+        printf("Resultado registrado em results/resultados.csv\n");
         armadilha_liberar(a);
     }
 
