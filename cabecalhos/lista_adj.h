@@ -8,14 +8,16 @@
  * Cada vértice u tem uma lista encadeada dos seus sucessores v (u -> v).
  */
 
-typedef struct NoViz {
-    int v;               /* vértice destino */
+typedef struct NoViz
+{
+    int v; /* vértice destino */
     struct NoViz *prox;
 } NoViz;
 
-typedef struct {
-    int n;        /* quantidade de vértices */
-    NoViz **adj;  /* array adj[u] = cabeça da lista de sucessores de u */
+typedef struct
+{
+    int n;       /* quantidade de vértices */
+    NoViz **adj; /* array adj[u] = cabeça da lista de sucessores de u */
 } ListaAdj;
 
 /* Cria lista vazia para n vértices. Retorna NULL em erro de alocação. */
