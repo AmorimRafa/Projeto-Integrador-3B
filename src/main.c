@@ -22,9 +22,13 @@ int main(int argc, char **argv) {
         return 2;
     }
     Representacao repr = REPR_LISTA;
-    for (int i = 2; i < argc; i++)
+    int comparar = 0;
+    for (int i = 2; i < argc; i++) {
         if (strcmp(argv[i], "--matriz") == 0)
             repr = REPR_MATRIZ;
+        else if (strcmp(argv[i], "--comparar") == 0)
+            comparar = 1;
+    }
 
     Cronometro t_leitura, t_tarjan, t_armadilha;
 
@@ -47,6 +51,21 @@ int main(int argc, char **argv) {
         printf("Memoria lista: %zu bytes\n", lista_memoria((ListaAdj *)g.dados));
     else
         printf("Memoria matriz: %zu bytes\n", matriz_memoria((MatrizAdj *)g.dados));
+
+    /* modo comparação: constrói as duas e imprime memória lado a lado */
+    if (comparar) {
+        ListaAdj *lcmp = lista_criar(n);
+        MatrizAdj *mcmp = matriz_criar(n);
+        for (int i = 0; i < m; i++) {
+            lista_inserir(lcmp, U[i], V[i]);
+            matriz_inserir(mcmp, U[i], V[i]);
+        }
+        printf("\n--- Comparacao lista x matriz ---\n");
+        printf("Memoria lista : %zu bytes\n", lista_memoria(lcmp));
+        printf("Memoria matriz: %zu bytes\n", matriz_memoria(mcmp));
+        lista_liberar(lcmp);
+        matriz_liberar(mcmp);
+    }
 
     /* CFC e armadilhas exigem a lista de adjacência */
     ListaAdj *l = (repr == REPR_LISTA) ? (ListaAdj *)g.dados : NULL;
