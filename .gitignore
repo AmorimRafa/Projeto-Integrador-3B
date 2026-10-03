@@ -53,3 +53,6 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Binário gerado pela compilação local dentro do container
+grafo

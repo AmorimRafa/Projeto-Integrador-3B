@@ -1,0 +1,7 @@
+dataset,repr,V,E,n_cfc,n_armadilhas,memoria_bytes,ms_leitura,ms_tarjan,ms_armadilha
+dados/gerados/t1.txt,lista,100,400,1,1,7216,2.201,0.011,0.003
+dados/real/sp_centro.txt,lista,6039,8154,979,60,178792,31.748,0.569,2.977
+dados/gerados/t2.txt,lista,500,2000,39,23,36016,6.415,0.052,0.023
+dados/gerados/t3.txt,lista,1000,4000,18,7,72016,10.582,0.090,0.041
+dados/gerados/t4.txt,lista,5000,20000,114,66,360016,163.464,0.467,0.476
+dados/gerados/t5.txt,lista,10000,40000,233,129,720016,632.869,1.791,1.373
