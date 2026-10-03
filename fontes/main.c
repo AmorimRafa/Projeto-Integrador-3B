@@ -61,10 +61,18 @@ int main(int argc, char **argv)
         grafo_adicionar_aresta(&g, U[i], V[i]);
 
     /* mede a memória da estrutura construída pelo Grafo */
+    size_t memoria_bytes;
+
     if (repr == REPR_LISTA)
-        printf("Memoria lista: %zu bytes\n", lista_memoria((ListaAdj *)g.dados));
+    {
+        memoria_bytes = lista_memoria((ListaAdj *)g.dados);
+        printf("Memoria lista: %zu bytes\n", memoria_bytes);
+    }
     else
-        printf("Memoria matriz: %zu bytes\n", matriz_memoria((MatrizAdj *)g.dados));
+    {
+        memoria_bytes = matriz_memoria((MatrizAdj *)g.dados);
+        printf("Memoria matriz: %zu bytes\n", memoria_bytes);
+    }
 
     /* modo comparação: constrói as duas e imprime memória lado a lado */
     if (comparar)
@@ -140,15 +148,18 @@ int main(int argc, char **argv)
                a->n_tamanho1_sem_laco, a->n_tamanho1_com_laco, a->n_tamanho_maior1);
 
         Resultado r;
+
         r.dataset = argv[1];
         r.repr = (repr == REPR_LISTA) ? "lista" : "matriz";
         r.n_vertices = n;
         r.n_arestas = m;
         r.n_cfc = s->n_comp;
         r.n_armadilhas = a->n_terminais;
+        r.memoria_bytes = memoria_bytes;
         r.ms_leitura = ms_leitura;
         r.ms_tarjan = ms_tarjan;
         r.ms_armadilha = ms_arm;
+        
         resultado_registrar("resultados/resultados.csv", &r);
         printf("Resultado registrado em resultados/resultados.csv\n");
         armadilha_liberar(a);
